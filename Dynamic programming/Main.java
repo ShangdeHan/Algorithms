@@ -19,7 +19,7 @@ public class Main {
         for(int i = 1; i <= N; i++){
             int weight = weights[i-1];
             int value = values[i-1];
-            for(int j = 1; j <= V; j++){
+            for(int j = 0; j <= V; j++){
                 if(j - weight < 0 ){
                     map[i][j] = map[i-1][j];
                     continue;
@@ -41,5 +41,39 @@ public class Main {
             }
         }
         return count[N];
+    }
+
+    public int findTargetSumWays(int[] nums, int s) {
+        int sum = 0;
+        for (int n : nums)
+            sum += n;
+        return sum < s ? 0 : subsetstwo(nums, (s + sum) /2);
+    }
+
+    public int subsets(int[] nums, int T){
+        int[][] dp = new int[nums.length+1][T+1];
+        dp[0][0] = 1;
+        for(int i = 1; i <=nums.length; i++){
+            for(int j = 0; j<=T; j++){
+                if(j < nums[i-1]){
+                    dp[i][j] = dp[i-1][j];
+                }
+                else {
+                    dp[i][j] = dp[i-1][j] + dp[i-1][j-nums[i-1]];
+                }
+            }
+        }
+        return dp[nums.length][T];
+    }
+
+    public int subsetstwo(int[] nums, int T){
+        int[] dp = new int[T+1];
+        dp[0] = 1;
+        for(int n : nums){
+            for(int i = T; i >= n; i--){
+                dp[i] += dp[i - n];
+            }
+        }
+        return dp[T];
     }
 }

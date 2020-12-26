@@ -47,10 +47,10 @@ public class Main {
         int sum = 0;
         for (int n : nums)
             sum += n;
-        return sum < s ? 0 : subsetstwo(nums, (s + sum) /2);
+        return sum < s ? 0 : subsetstwo494(nums, (s + sum) /2);
     }
 
-    public int subsets(int[] nums, int T){
+    public int subsets494(int[] nums, int T){
         int[][] dp = new int[nums.length+1][T+1];
         dp[0][0] = 1;
         for(int i = 1; i <=nums.length; i++){
@@ -66,7 +66,7 @@ public class Main {
         return dp[nums.length][T];
     }
 
-    public int subsetstwo(int[] nums, int T){
+    public int subsetstwo494(int[] nums, int T){
         int[] dp = new int[T+1];
         dp[0] = 1;
         for(int n : nums){
@@ -75,5 +75,41 @@ public class Main {
             }
         }
         return dp[T];
+    }
+
+//416. Partition Equal Subset Sum
+    public boolean canPartition(int[] nums) {
+        int total = 0;
+        for(int i = 0; i < nums.length; i++){
+            total += nums[i];
+        }
+        return subsets416(nums, total/2);
+    }
+
+    public boolean subsets416(int[] nums, int t){
+        boolean[][] dp = new boolean[nums.length+1][t+1];
+        dp[0][0] = true;
+        for(int i = 1; i <= nums.length; i++){
+            dp[i][0] = true;
+        }
+        for(int i = 1; i <= nums.length; i++){
+            for(int j = 1; j <= t; j++){
+                if(j >= nums[i-1])
+                    dp[i][j] = dp[i-1][j] || dp[i-1][j - nums[i-1]];
+                else dp[i][j] = dp[i-1][j];
+            }
+        }
+        return dp[nums.length][t];
+    }
+
+    public boolean subsetstwo416(int[] nums, int t){
+        boolean[] dp = new boolean[t+1];
+        dp[0] = true;
+        for(int num : nums){
+            for(int i = t; i > 0 ; i--){
+                dp[i] = dp[i] || dp[i - num];
+            }
+        }
+        return dp[t];
     }
 }

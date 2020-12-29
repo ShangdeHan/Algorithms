@@ -4,22 +4,22 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        int V = 6;
-        int N = 4;
+        int W = 6;//物品重量
+        int N = 4;//物品数量
         int[] weights = {5, 6, 10, 9};
         int[] values = {200, 66, 100, 72};
-        int total = ZeroOnePack(V, N, weights, values);
+        int total = ZeroOnePack(W, N, weights, values);
         System.out.println(total);
         int[] array = {1, 5, 6};
         System.out.println(WaysToSum(7, array));
     }
 
-    public static int ZeroOnePack(int V, int N, int[] weights, int[] values){
-        int[][] map = new int[N+1][V+1];
+    public static int ZeroOnePack(int W, int N, int[] weights, int[] values){
+        int[][] map = new int[N+1][W+1];
         for(int i = 1; i <= N; i++){
             int weight = weights[i-1];
             int value = values[i-1];
-            for(int j = 0; j <= V; j++){
+            for(int j = 0; j <= W; j++){
                 if(j - weight < 0 ){
                     map[i][j] = map[i-1][j];
                     continue;
@@ -27,7 +27,7 @@ public class Main {
                 map[i][j] = Math.max(map[i-1][j], map[i-1][j-weight] + value);
             }
         }
-        return map[N][V];
+        return map[N][W];
     }
 
     public static int WaysToSum(int N, int[] array){

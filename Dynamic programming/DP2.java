@@ -36,4 +36,30 @@ public class DP2 {
         }
         return dp[n];
     }
+
+    /*
+        5. Longest Palindromic Substring
+        Input: s = "babad"
+        Output: "bab"
+     */
+    public String longestPalindrome(String s) {
+        if(s == null || "".equals(s)){
+            return s;
+        }
+        int max = 0;
+        int len = s.length();
+        String str = "";
+        boolean dp[][] = new boolean[len][len];
+        for(int i = 0; i < len; i++){
+            for(int j = 0; j <= i; j++){
+                boolean value = s.charAt(i) == s.charAt(j);
+                dp[i][j] = i-j >= 2 ? dp[i-1][j+1] && value : value;
+                if(dp[i][j] && i-j+1 > max){
+                    max = i-j+1;
+                    str = s.substring(j, i+1);
+                }
+            }
+        }
+        return str;
+    }
 }

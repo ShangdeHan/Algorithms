@@ -1,2 +1,2 @@
-1.linkedlist
-2. doubly-linkedlist
+1.linkedlist.
+2. doubly-linkedlist.

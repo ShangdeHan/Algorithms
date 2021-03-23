@@ -40,4 +40,30 @@ public class LinkedList {
         else n.next = l1;
         return l3.next;
     }
+
+/*
+    83. Remove Duplicates from Sorted List
+    Given the head of a sorted linked list, delete all duplicates such that each element appears only once. Return the linked list sorted as well.
+    Example 1:
+    Input: head = [1,1,2]
+    Output: [1,2]
+
+    Example 2:
+    Input: head = [1,1,2,3,3]
+    Output: [1,2,3]
+ */
+
+
+
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode n = head;
+        while(n!= null && n.next != null){
+            if(n.next.val == n.val){
+                n.next = n.next.next;
+            }else{
+                n=n.next;
+            }
+        }
+        return head;
+    }
 }

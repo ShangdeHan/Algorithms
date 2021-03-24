@@ -2,17 +2,65 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-
+    public static int x = 0;
+    public static int y = 0;
     public static void main(String[] args) {
-        int W = 6;//物品重量
-        int N = 4;//物品数量
-        int[] weights = {5, 6, 10, 9};
-        int[] values = {200, 66, 100, 72};
-        int total = ZeroOnePack(W, N, weights, values);
-        System.out.println(total);
-        int[] array = {1, 5, 6};
-        System.out.println(WaysToSum(7, array));
+        int[] a = {2, -1, 8, -1, 6};
+        int[][] b = {{1, 5}, {-5, -5}, {0, 4}, {-1, -1}, {4, 5}, {-5, -3}, {-2, 1}, {-2, -5}, {0, 5}, {0, -1}};
+        System.out.println(robotSim(a, b));
     }
+//////////////////////////
+
+    public static int robotSim(int[] commands, int[][] obstacles) {
+        int angle = 0;
+        for(int i = 0; i < commands.length; i++){
+            if(commands[i] == -2)angle -= 1;
+            else if(commands[i] == -1)angle += 1;
+            else{
+                if(Math.abs(angle) % 4 == 0){//up
+                    if(ob(1, y, commands[i], obstacles))y += commands[i];
+                }else if(angle == 1 || ((angle / 2) % 2 == 0 && angle % 2 == 1)){//right
+                    if(ob(0, x, commands[i], obstacles))x += commands[i];
+                }else if(angle == -1 || ((angle / 2) % 2 == 0 && angle % 2 == -1)){//left
+                    if(ob(0, x, -commands[i], obstacles))y -= commands[i];
+                }else if(Math.abs(angle) % 2 == 0){//down
+                    if(ob(1, y, -commands[i], obstacles))x -= commands[i];
+                }
+            }
+        }
+        return (int)(Math.pow(x, 2) + Math.pow(y, 2));
+    }
+
+    public static boolean ob(int string, int current, int update, int[][] obstacles){//string == 0 if it is x.
+        for(int j = 0; j < obstacles.length; j++){
+            if(x == obstacles[j][0]){
+                if(string == 1){
+                    if(current < obstacles[j][1] && update > 0 && current + update >= obstacles[j][1]){
+                        y = obstacles[j][1] -1;
+                        return false;
+                    }
+                    if(current > obstacles[j][1] && update < 0 && current + update <= obstacles[j][1]){
+                        y = obstacles[j][1] +1;
+                        return false;
+                    }
+                }
+            }
+            if(y == obstacles[j][1]){
+                if(string == 0){
+                    if(current < obstacles[j][0] && update > 0 && current + update >= obstacles[j][0]){
+                        x = obstacles[j][0] -1;
+                        return false;
+                    }
+                    if(current > obstacles[j][0] && update < 0 && current + update <= obstacles[j][0]){
+                        x = obstacles[j][0] +1;
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+    ////////////////////////////
 
     public static int ZeroOnePack(int W, int N, int[] weights, int[] values){
         int[][] map = new int[N+1][W+1];

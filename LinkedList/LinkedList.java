@@ -145,4 +145,39 @@ public class LinkedList {
         }
         return head;
     }
+
+    /*
+    206. Reverse Linked List
+    Given the head of a singly linked list, reverse the list, and return the reversed list.
+    Example1:
+    Input: head = [1,2,3,4,5]
+    Output: [5,4,3,2,1]
+
+    Example2:
+    Input: head = [1,2]
+    Output: [2,1]
+
+    Example3:
+    Input: head = []
+    Output: []
+     */
+    public ListNode reverseList(ListNode head) {
+        if(head == null || head.next == null)return head;
+        ListNode current = head;
+        int count = 0;
+        while(current.next!= null){
+            current = current.next;
+            count++;
+        }
+        current = null;
+        while(count >= 0){
+            ListNode temp = head.next;
+            head.next = current;
+            current = head;
+            head = temp;
+            count--;
+        }
+        head = current;
+        return head;
+    }
 }

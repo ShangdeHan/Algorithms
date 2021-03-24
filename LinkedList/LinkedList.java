@@ -104,4 +104,45 @@ public class LinkedList {
         }
         return sentinel.next;
     }
+    /*
+        25. Reverse Nodes in k-Group
+        Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.
+        k is a positive integer and is less than or equal to the length of the linked list. If the number of nodes
+        is not a multiple of k then left-out nodes, in the end, should remain as it is.
+        Example1:
+        Input: head = [1,2,3,4,5], k = 2
+        Output: [2,1,4,3,5]
+
+        Example2:
+        Input: head = [1,2,3,4,5], k = 3
+        Output: [3,2,1,4,5]
+
+        Example3:
+        Input: head = [1,2,3,4,5], k = 1
+        Output: [1,2,3,4,5]
+
+        Example4:
+        Input: head = [1], k = 1
+        Output: [1]
+     */
+    public ListNode reverseKGroup(ListNode head, int k) {
+        int count = 0;
+        ListNode current = head;
+        while(count!=k && current!=null){//find k+1
+            count++;
+            current = current.next;
+        }
+        if(count == k){
+            current = reverseKGroup(current, k);
+            while(count>0){
+                ListNode temp = head.next;
+                head.next = current;
+                current = head;
+                head = temp;
+                count--;
+            }
+            head = current;
+        }
+        return head;
+    }
 }

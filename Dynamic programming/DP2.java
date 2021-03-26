@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 public class DP2 {
     /*
         LC 53  Maximum Subarray:
@@ -61,5 +63,69 @@ public class DP2 {
             }
         }
         return str;
+    }
+
+
+    /*
+    3. Longest Substring Without Repeating Characters
+    Given a string s, find the length of the longest substring without repeating characters.
+
+    Example1:
+    Input: s = "abcabcbb"
+    Output: 3
+    Explanation: The answer is "abc", with the length of 3.
+
+    Example2:
+    Input: s = "bbbbb"
+    Output: 1
+    Explanation: The answer is "b", with the length of 1.
+
+    Example3:
+    Input: s = "pwwkew"
+    Output: 3
+    Explanation: The answer is "wke", with the length of 3.
+    Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
+     */
+
+    public int lengthOfLongestSubstring(String s) {
+        if(s.equals(""))return 0;
+        if(s.length()== 1)return 1;
+        String str = "";
+        int max = 1;
+        int iter = 1;
+        int i = 0;
+        while(i <= s.length()){
+            int next = 0;
+            for(int j = iter-1; j >=i; j--){
+                if(iter >= s.length())return max;
+                if(s.charAt(j) == s.charAt(iter)){
+                    next = 1;
+                    break;
+                }
+            }
+            if(next == 0){
+                max = Math.max(max, iter+1-i);
+                iter++;
+            }
+            if(next == 1){
+                i++;
+            }
+        }
+        return max;
+    }
+
+    //better solution:
+    public int lengthOfLongestSubstring2(String s) {
+        if (s.length()==0) return 0;
+        HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+        int max=0;
+        for (int i=0, j=0; i<s.length(); ++i){
+            if (map.containsKey(s.charAt(i))){
+                j = Math.max(j,map.get(s.charAt(i))+1);
+            }
+            map.put(s.charAt(i),i);
+            max = Math.max(max,i-j+1);
+        }
+        return max;
     }
 }

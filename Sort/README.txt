@@ -5,3 +5,4 @@
 4. Heap Sort
 5. Quick Sort      // divide and conquer
 6. Quick Select    //和quick sort很像 都需要partition step。 不同的是recursion部分
+1, 2, 3 对比 https://blog.csdn.net/weixin_39679367/article/details/83188391

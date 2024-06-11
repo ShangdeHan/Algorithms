@@ -1,0 +1,4 @@
+解决array类型的问题，需要思考的核心的三个点：
+1. two pointers
+2. 从后往前loop
+3. search: 可不可以sort, 可以的话binary search
